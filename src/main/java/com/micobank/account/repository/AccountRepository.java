@@ -8,12 +8,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Long> {
 
+    // Find account details using customer ID
     Optional<Account> findByCustomerId(Long customerId);
 
+    // Delete account using customer ID
     @Transactional
     @Modifying
     void deleteByCustomerId(Long customerId);
