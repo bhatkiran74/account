@@ -26,9 +26,16 @@ public class AccountRestController {
     }
 
     @PutMapping("/update")
-    ResponseEntity<ResponseDto> updateAccount(@RequestBody AccountDto accountDto){
-        iAccountService.updateAccount(accountDto);
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(AccountConstants.STATUS_200,AccountConstants.MESSAGE_200));
+    ResponseEntity<ResponseDto> updateAccount(@RequestBody CustomerDto customerDto){
+
+
+        boolean isUpdated = iAccountService.updateAccount(customerDto);
+
+        if (isUpdated) {
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(AccountConstants.STATUS_200,AccountConstants.MESSAGE_200));
+        }else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDto(AccountConstants.STATUS_500,AccountConstants.MESSAGE_500));
+        }
     }
 
 

@@ -74,19 +74,32 @@ public class AccountServiceImpl implements IAccountService {
     }
 
     @Override
-    public void updateAccount(AccountDto accountDto) {
-        Account account = accountRepository.findById(accountDto.getAccountNumber())
-                .orElseThrow(() -> new ResourceNotFoundException("Account", "AccountNumber", accountDto.getAccountNumber().toString()));
+    public boolean updateAccount(CustomerDto customerDto) {
 
-        if (accountDto.getAccountType() != null) {
-            account.setAccountType(accountDto.getAccountType());
-        }
-        if (accountDto.getBranchAddress() != null) {
-            account.setBranchAddress(accountDto.getBranchAddress());
+        boolean isUpdated = false;
+
+        AccountDto accountDto = customerDto.getAccountDto();
+
+        if (accountDto!=null){
+            Account account = accountRepository.findById(accountDto.getAccountNumber())
+                    .orElseThrow(() -> new ResourceNotFoundException("Account", "AccountNumber", accountDto.getAccountNumber().toString()));
+
+            AccountMapper.mapToAccount(accountDto, account);
+            account = accountRepository.save(account);
+
+
+            Long customerId = account.getCustomerId();
+
+            Customer customer = customerRepository.findById(customerId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Customer", "CustomerId", customerId.toString()));
+
+            CustomerMapper.toCustomer(customerDto, customer);
+            customerRepository.save(customer);
+
+            isUpdated = true;
         }
 
-        account.setUpdatedAt(LocalDateTime.now());
-        account.setUpdatedBy("Anonymous");
-        accountRepository.save(account);
+        return isUpdated;
+
     }
 }

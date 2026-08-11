@@ -7,5 +7,5 @@ public interface IAccountService {
 
     void createAccount(CustomerDto customerDto);
     CustomerDto findAccountDetails(String mobileNumber);
-    void updateAccount(AccountDto accountDto);
+    boolean updateAccount(CustomerDto customerDto);
 }
