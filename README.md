@@ -37,12 +37,26 @@ cd account
 ```
 
 ### <span style="color:#6C5CE7">2. Configure Database</span>
-Update `application.properties` or `application.yml` with your MySQL configuration:
-```properties
-spring.datasource.url=jdbc:mysql://localhost:3306/account_db
-spring.datasource.username=root
-spring.datasource.password=your_password
-spring.jpa.hibernate.ddl-auto=update
+Update `application.yml` with your MySQL configuration:
+```yml
+spring:
+  application:
+    name: account-service
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/account?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
 ```
 
 ### <span style="color:#6C5CE7">3. Build the Project</span>
