@@ -297,3 +297,38 @@ Use the following URL to access the Swagger UI:
 
 ```text
 http://localhost:8080/swagger-ui.html
+```
+
+# Ways To create Docker Image for Spring Boot Application
+## 1. Using Dockerfile
+### Step 1: add packaging jar configuration
+```xml
+  	<packaging>jar</packaging>
+```
+
+### Step 2: Create Dockerfile
+``` dockerfile
+  	
+FROM arm64v8/openjdk:17-jdk-slim
+LABEL authors="kiran"
+
+MAINTAINER bhatkiran74
+
+COPY target/account-0.0.1-SNAPSHOT.jar account-0.0.1-SNAPSHOT.jar
+
+ENTRYPOINT ["java", "-jar", "account-0.0.1-SNAPSHOT.jar"]
+```
+
+### Commands
+```text
+docker build . -t bhatkiran74/account:s1
+```
+```text
+docker run -p 9091:9091 bhatkiran74/account:s1
+```
+
+
+## 2. Using Dockerfile
+### Step 1: add packaging jar configuration
+```xml
+```
