@@ -45,10 +45,6 @@ public class AccountServiceImpl implements IAccountService {
             );
         }
 
-        // Set audit information for the new customer
-        customer.setCreatedAt(LocalDateTime.now());
-        customer.setCreatedBy("Anonymous");
-
         System.out.println("Creating account for customer: " + customer);
 
         // Save customer details and create the corresponding account
@@ -69,10 +65,6 @@ public class AccountServiceImpl implements IAccountService {
 
         newAccount.setAccountType(AccountConstants.SAVINGS);
         newAccount.setBranchAddress(AccountConstants.ADDRESS);
-
-        // Set audit information
-        newAccount.setCreatedAt(LocalDateTime.now());
-        newAccount.setCreatedBy("Anonymous");
 
         return newAccount;
     }

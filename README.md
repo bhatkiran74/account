@@ -216,3 +216,63 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 }
 
 ```
+
+
+## Implementation of Auditing for Spring Boot</span>
+### Step 1: Add Anotation to BaseEntity</span>
+```java
+
+@MappedSuperclass
+@Getter
+@Setter
+@ToString
+@EntityListeners(AuditingEntityListener.class)
+public class BaseEntity {
+
+    @Column(updatable = false)
+    @CreatedDate
+    private LocalDateTime createdAt;
+
+    @Column(updatable = false)
+    @CreatedBy
+    private String createdBy;
+
+    @Column(insertable = false)
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
+
+    @Column(insertable = false)
+    @LastModifiedBy
+    private String updatedBy;
+}
+
+```
+
+### Step 2: Create AuditorAware Bean in Configuration Class
+```java
+
+@Component("AuditAwareImpl")
+public class AuditAwareImpl implements AuditorAware<String> {
+
+    @Override
+    public java.util.Optional<String> getCurrentAuditor() {
+        // Return the current auditor (user) as an Optional
+        return Optional.of("Account_MS"); // Replace with actual user retrieval logic
+    }
+}
+
+```
+
+
+### Step 3: Add @EnableJpaAuditing Annotation to Main Application Class
+```java
+@SpringBootApplication
+@EnableJpaAuditing(auditorAwareRef = "AuditAwareImpl")
+public class AccountApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(AccountApplication.class, args);
+	}
+
+}
+```
