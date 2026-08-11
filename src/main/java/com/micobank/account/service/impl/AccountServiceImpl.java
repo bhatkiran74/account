@@ -72,4 +72,21 @@ public class AccountServiceImpl implements IAccountService {
         customerDto.setAccountDto(accountDto);
         return customerDto;
     }
+
+    @Override
+    public void updateAccount(AccountDto accountDto) {
+        Account account = accountRepository.findById(accountDto.getAccountNumber())
+                .orElseThrow(() -> new ResourceNotFoundException("Account", "AccountNumber", accountDto.getAccountNumber().toString()));
+
+        if (accountDto.getAccountType() != null) {
+            account.setAccountType(accountDto.getAccountType());
+        }
+        if (accountDto.getBranchAddress() != null) {
+            account.setBranchAddress(accountDto.getBranchAddress());
+        }
+
+        account.setUpdatedAt(LocalDateTime.now());
+        account.setUpdatedBy("Anonymous");
+        accountRepository.save(account);
+    }
 }

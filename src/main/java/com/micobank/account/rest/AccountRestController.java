@@ -3,6 +3,7 @@ package com.micobank.account.rest;
 
 import com.micobank.account.constants.AccountConstants;
 import com.micobank.account.dto.CustomerDto;
+import com.micobank.account.dto.AccountDto;
 import com.micobank.account.dto.ResponseDto;
 import com.micobank.account.service.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,12 @@ public class AccountRestController {
     ResponseEntity<ResponseDto> createAccount(@RequestBody CustomerDto customerDto){
         iAccountService.createAccount(customerDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseDto(AccountConstants.STATUS_201,AccountConstants.MESSAGE_201));
+    }
+
+    @PutMapping("/update")
+    ResponseEntity<ResponseDto> updateAccount(@RequestBody AccountDto accountDto){
+        iAccountService.updateAccount(accountDto);
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(AccountConstants.STATUS_200,AccountConstants.MESSAGE_200));
     }
 
 
