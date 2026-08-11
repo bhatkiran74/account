@@ -49,4 +49,24 @@ public class GlobalExceptionHandler {
         // Return 400 BAD REQUEST response
         return new ResponseEntity<>(errorResponseDto, HttpStatus.BAD_REQUEST);
     }
+
+    // Handle exception global exception
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponseDto> handlerGlobalException(
+            Exception resourceNotFoundException,
+            WebRequest webRequest
+    ) {
+
+        // Create error response with exception details
+        ErrorResponseDto errorResponseDto = new ErrorResponseDto(
+                webRequest.getDescription(false),
+                HttpStatus.INTERNAL_SERVER_ERROR,
+                resourceNotFoundException.getMessage(),
+                LocalDateTime.now()
+        );
+
+        // Return 500 NOT FOUND response
+        return new ResponseEntity<>(errorResponseDto, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
 }
