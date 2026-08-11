@@ -328,7 +328,55 @@ docker run -p 9091:9091 bhatkiran74/account:s1
 ```
 
 
-## 2. Using Dockerfile
+## 2. Using Build Packs
 ### Step 1: add packaging jar configuration
 ```xml
+  	<packaging>jar</packaging>
+```
+### Step 2: add configuration to plugin
+
+```xml
+<plugin>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-maven-plugin</artifactId>
+    <configuration>
+        <image>
+            <name>bhatkiran74/${project.artifactId}:s1</name>
+        </image>
+    </configuration>
+</plugin>
+```
+
+
+
+### Step 3: Run the following command to build the Docker image using Spring Boot's buildpacks:
+```text
+ mvn spring-boot:build-image
+```
+
+## 3. Using Google Jib Plugin
+### Step 1: add packaging jar configuration
+```xml
+  	<packaging>jar</packaging>
+```
+
+
+### Step 2: add configuration to plugin
+
+```xml
+<plugin>
+    <groupId>com.google.cloud.tools</groupId>
+    <artifactId>jib-maven-plugin</artifactId>
+    <version>0.9.0</version>
+    <configuration>
+        <to>
+            <image>bhatkiran74/${project.artifactId}:s1</image>
+        </to>
+    </configuration>
+</plugin>
+```
+
+### Step 3: Run the following command to build the Docker image
+```text
+ mvn compile jib:dockerBuild
 ```
