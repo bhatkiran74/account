@@ -5,14 +5,18 @@ import com.micobank.account.constants.AccountConstants;
 import com.micobank.account.dto.CustomerDto;
 import com.micobank.account.dto.ResponseDto;
 import com.micobank.account.service.IAccountService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/api/v1/account", produces = {MediaType.APPLICATION_JSON_VALUE})
+@Validated
 public class AccountRestController {
 
     // Inject account service to handle account-related business logic
@@ -21,7 +25,7 @@ public class AccountRestController {
 
     // Create a new customer account
     @PostMapping("/create")
-    ResponseEntity<ResponseDto> createAccount(@RequestBody CustomerDto customerDto) {
+    ResponseEntity<ResponseDto> createAccount(@Valid @RequestBody CustomerDto customerDto) {
 
         // Call service to create the account
         iAccountService.createAccount(customerDto);
@@ -35,7 +39,7 @@ public class AccountRestController {
 
     // Update existing customer account details
     @PutMapping("/update")
-    ResponseEntity<ResponseDto> updateAccount(@RequestBody CustomerDto customerDto) {
+    ResponseEntity<ResponseDto> updateAccount(@Valid @RequestBody CustomerDto customerDto) {
 
         // Call service to update account details
         boolean isUpdated = iAccountService.updateAccount(customerDto);
@@ -59,7 +63,8 @@ public class AccountRestController {
     // Fetch account details using the customer's mobile number
     @GetMapping("/fetch")
     ResponseEntity<CustomerDto> fetchAccountDetailsUsingMobileNo(
-            @RequestParam String mobileNumber) {
+            @RequestParam @Pattern(regexp = "^[6-9]\\d{9}$",message = "Please provide a valid 10-digit Indian mobile number")
+            String mobileNumber) {
 
         // Retrieve account details from the service layer
         CustomerDto customerDto = iAccountService.findAccountDetails(mobileNumber);
@@ -70,7 +75,8 @@ public class AccountRestController {
 
     // Delete customer account using the mobile number
     @DeleteMapping("/delete")
-    ResponseEntity<ResponseDto> deleteAccount(@RequestParam String mobileNumber) {
+    ResponseEntity<ResponseDto> deleteAccount(@RequestParam@Pattern(regexp = "^[6-9]\\d{9}$",message = "Please provide a valid 10-digit Indian mobile number")
+                                              String mobileNumber) {
 
         // Call service to delete the account
         boolean isDeleted = iAccountService.deleteAccount(mobileNumber);
