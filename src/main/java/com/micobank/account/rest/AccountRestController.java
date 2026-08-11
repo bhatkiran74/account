@@ -47,4 +47,17 @@ public class AccountRestController {
         return ResponseEntity.status(HttpStatus.OK).body(customerDto);
     }
 
+
+    @DeleteMapping("/delete")
+    ResponseEntity<ResponseDto> deleteAccount(@RequestParam String mobileNumber){
+
+        boolean isDeleted = iAccountService.deleteAccount(mobileNumber);
+
+        if (isDeleted) {
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(AccountConstants.STATUS_200,AccountConstants.MESSAGE_200));
+        }else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDto(AccountConstants.STATUS_500,AccountConstants.MESSAGE_500));
+        }
+    }
+
 }
