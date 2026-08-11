@@ -119,15 +119,15 @@ This project is part of the MicoBank platform.
 For issues or questions, please contact the development team.
 
 
-## <span style="color:#00B894">Implementation of Validation for Spring Boot</span>
-### <span style="color:#6C5CE7">Step 1: Add Validation Dependencies</span>
+## <span style="color:#431515">Implementation of Validation for Spring Boot</span>
+### <span style="color:#F9543B">Step 1: Add Validation Dependencies</span>
 ```xml
 <dependency>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-validation</artifactId>
 </dependency>
 ```
-### <span style="color:#6C5CE7">Step 2: Add Validation Annotations To DTO's</span>
+### <span style="color:#F9543B">Step 2: Add Validation Annotations To DTO's</span>
 
 ```java
 @Data
@@ -154,7 +154,7 @@ public class CustomerDto {
 
 ```
 
-### <span style="color:#6C5CE7">Step 3: Add @Validated Annotations To RestController</span>
+### <span style="color:#F9543B">Step 3: Add @Validated Annotations To RestController</span>
 
 ```java
 @RestController
@@ -188,7 +188,7 @@ public class AccountRestController {
 ```
 
 
-### <span style="color:#6C5CE7">Step 4: OverRide handleMethodArgumentNotValid Exception Handler Method </span>
+### <span style="color:#F9543B">Step 4: OverRide handleMethodArgumentNotValid Exception Handler Method </span>
 ```java
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
