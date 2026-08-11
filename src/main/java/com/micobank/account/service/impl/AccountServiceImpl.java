@@ -1,10 +1,13 @@
 package com.micobank.account.service.impl;
 
 import com.micobank.account.constants.AccountConstants;
+import com.micobank.account.dto.AccountDto;
 import com.micobank.account.dto.CustomerDto;
 import com.micobank.account.entity.Account;
 import com.micobank.account.entity.Customer;
 import com.micobank.account.exception.CustomerAlreadyExistException;
+import com.micobank.account.exception.ResourceNotFoundException;
+import com.micobank.account.mapper.AccountMapper;
 import com.micobank.account.mapper.CustomerMapper;
 import com.micobank.account.repository.AccountRepository;
 import com.micobank.account.repository.CustomerRepository;
@@ -23,7 +26,6 @@ public class AccountServiceImpl implements IAccountService {
     private AccountRepository accountRepository;
     @Autowired
     private CustomerRepository customerRepository;
-
 
     @Override
     public void createAccount(CustomerDto customerDto) {
@@ -46,12 +48,28 @@ public class AccountServiceImpl implements IAccountService {
     private Account createNewAccount(Customer customer) {
         Account newAccount = new Account();
         newAccount.setCustomerId(customer.getCustomerId());
-        long randomAccountNumber  = (long) (Math.random() * 10000000000L);
+        long randomAccountNumber = (long) (Math.random() * 10000000000L);
         newAccount.setAccountNumber(randomAccountNumber);
         newAccount.setAccountType(AccountConstants.SAVINGS);
         newAccount.setBranchAddress(AccountConstants.ADDRESS);
         newAccount.setCreatedAt(LocalDateTime.now());
         newAccount.setCreatedBy("Anonymous");
         return newAccount;
+    }
+
+    @Override
+    public CustomerDto findAccountDetails(String mobileNumber) {
+
+        Customer customer = customerRepository.findByMobileNumber(mobileNumber).orElseThrow(() -> new ResourceNotFoundException
+                ("Customer", "MobileNumber", mobileNumber));
+
+        Account account = accountRepository.findByCustomerId(customer.getCustomerId()).orElseThrow(() -> new ResourceNotFoundException
+                ("Account", "CustomerId", customer.getCustomerId().toString()));
+
+        CustomerDto customerDto = CustomerMapper.toCustomerDto(customer, new CustomerDto());
+        AccountDto accountDto = AccountMapper.mapToAccountDto(account, new AccountDto());
+
+        customerDto.setAccountDto(accountDto);
+        return customerDto;
     }
 }
