@@ -380,3 +380,59 @@ docker run -p 9091:9091 bhatkiran74/account:s1
 ```text
  mvn compile jib:dockerBuild
 ```
+
+
+## How To Read Configuration Properties in Spring Boot
+### 1: Using @Value Annotation
+```java
+@Component
+public class MyComponent {  
+
+    @Value("${my.property}")
+    private String myProperty;
+
+    public void printProperty() {
+        System.out.println("Property value: " + myProperty);
+    }
+}
+```
+
+### 2: Using Environment Object
+
+```java
+@Autowired
+private Environment env;
+
+public void printProperty() {
+    String myProperty = env.getProperty("my.property");
+    System.out.println("Property value: " + myProperty);
+}
+```
+
+
+### 3: Using @ConfigurationProperties Annotation
+
+```java
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
+
+@ConfigurationProperties(prefix = "my")
+public class MyProperties {
+    private String property;
+    // Getters and Setters
+}
+
+
+//add @ConfigurationPropertiesScan to main spring boot application class
+@SpringBootApplication
+@EnableJpaAuditing(auditorAwareRef = "AuditAwareImpl")
+@ConfigurationPropertiesScan
+public class AccountApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(AccountApplication.class, args);
+    }
+
+}
+
+```
