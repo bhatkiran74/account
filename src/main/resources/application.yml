@@ -2,10 +2,10 @@ server:
   port: 9091
 
 spring:
-  profiles:
-    active: e2e
   application:
-    name: account-service
+    name: "account"
+  profiles:
+    active: prod
 
   datasource:
     url: jdbc:mysql://localhost:3306/account?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
@@ -21,6 +21,33 @@ spring:
       hibernate:
         format_sql: true
         dialect: org.hibernate.dialect.MySQLDialect
+  config:
+    import: "optional:configserver:http://localhost:9071"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Swagger/OpenAPI Configuration
 springdoc:
@@ -37,15 +64,3 @@ springdoc:
     show-common-extensions: true
   show-actuator: false
   use-fqn: true
-
-
-build:
-  info: 10.10.11-snapshot
-
-account:
-  name: account-service
-  version: 1.0.0
-  description: Account Service for managing user accounts
-  contact:
-    name: Kiransing Bhat
-    email: bhatkiran74@gmail.com

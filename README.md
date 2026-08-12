@@ -507,3 +507,42 @@ public class ConfigServerApplication {
 
 ### 3: create yml file structure for config-server
 ![Screenshot](readme-images/img.png)
+
+### 4: Add dependency for config-client in microservice project
+```xml
+
+<spring-cloud.version>2025.1.2</spring-cloud.version>
+
+
+<dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-config</artifactId>
+</dependency>
+
+
+<dependencyManagement>
+<dependencies>
+    <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-dependencies</artifactId>
+        <version>${spring-cloud.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+    </dependency>
+</dependencies>
+</dependencyManagement>
+```
+### 4: Delete all environment related yml from Microservice project and add below config to connect config server
+```yml
+spring:
+  application:
+    name: "account"
+  profiles:
+    active: prod
+  config:
+    import: "optional:configserver:http://localhost:9071"
+```
+### 5: Test via Microservice project Program arguments
+```text
+--spring.profiles.active=qa
+```
