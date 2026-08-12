@@ -596,3 +596,32 @@ management:
     <artifactId>spring-boot-starter-actuator</artifactId>
 </dependency>
 ```
+
+
+## If we want refreash all Microservice then we need to use RabitMQ
+### Steps to use RabitMQ
+### 1. Install RabitMQ or Use Docker image
+```text
+docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:4-management
+```
+
+```xml
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-bus-amqp</artifactId>
+</dependency>
+```
+```yml
+spring:
+  rabbitmq:
+  host: "localhost"
+  port: 5672
+  username: "guest"
+  password: "guest"
+
+```
+#### Direct Refresh all Microservices then they will fetch all config
+```text
+http://localhost:9091/actuator/busrefresh
+```
+![Screenshot](readme-images/img_1.png)
