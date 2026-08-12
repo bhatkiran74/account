@@ -546,3 +546,31 @@ spring:
 ```text
 --spring.profiles.active=qa
 ```
+
+## Using file system
+```yml
+spring:
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: "file:///I://Switch 26//config"
+```
+
+## Using Github Repo
+```yml
+spring:
+  application:
+    name: configserver
+  profiles:
+    active: git
+  cloud:
+    config:
+      server:
+        git:
+          uri: "https://github.com/bhatkiran74/mico-config.git"
+          default-label: main
+          timeout: 5
+          clone-on-start: true
+          force-pull: true
+```
