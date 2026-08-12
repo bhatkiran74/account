@@ -1,7 +1,7 @@
 package com.micobank.account.rest;
 
 
-import com.micobank.account.AccountConfiguration;
+import com.micobank.account.config.AccountConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;

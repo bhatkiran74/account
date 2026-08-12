@@ -574,3 +574,25 @@ spring:
           clone-on-start: true
           force-pull: true
 ```
+
+
+## Enabling of Actuator endpoints
+### Access Using below URL : 
+```http request
+http://localhost:9091/actuator
+```
+
+```yml
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+```
+### Actuator Dependency
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-actuator</artifactId>
+</dependency>
+```

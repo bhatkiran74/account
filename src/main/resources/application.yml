@@ -10,6 +10,13 @@ spring:
     import: "optional:configserver:http://localhost:9071"
 
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+
 
 
 

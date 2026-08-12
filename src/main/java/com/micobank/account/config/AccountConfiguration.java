@@ -1,8 +1,10 @@
-package com.micobank.account;
+package com.micobank.account.config;
 
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+
+import java.util.Map;
 
 @ConfigurationProperties(prefix = "account")
 @Data
@@ -11,11 +13,6 @@ public class AccountConfiguration {
     private String name;
     private String version;
     private String description;
-    private Contact contact;
+    private Map<String, String> contact;
 
-    @Data
-    public static class Contact{
-        private String name;
-        private String email;
-    }
 }
