@@ -436,3 +436,44 @@ public class AccountApplication {
 }
 
 ```
+
+
+## How To Spring Profiles in Spring Boot
+### 1: Create application-{profile}.properties or application-{profile}.yml files
+```text
+application-e2e.yml
+application-qa.yml
+application-prod.yml
+```
+
+### 2: Add config to application.properties or application.yml
+```yml
+spring:
+  profiles:
+    active: e2e
+
+```
+
+### 3: Add config to application-{profile}.properties or application-{profile}.yml file
+```yml
+#Profile - application-e2e.yml
+spring:
+  config:
+    active:
+      on-profile: "e2e"
+
+
+#Profile - application-qa.yml
+spring:
+  config:
+    active:
+      on-profile: "qa"
+
+
+#Profile - application-prod.yml
+spring:
+  config:
+    active:
+      on-profile: "prod"
+
+```

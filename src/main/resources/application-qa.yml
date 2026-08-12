@@ -1,11 +1,22 @@
+account:
+  name: account-service-qa
+  version: 1.0.0
+  description: Account Service for managing user accounts
+  contact:
+    name: Kiransing Bhat
+    email: bhatkiran74@gmail.com
+
+
 server:
   port: 9091
 
 spring:
-  profiles:
-    active: e2e
   application:
     name: account-service
+
+    config:
+      active:
+        on-profile: "qa"
 
   datasource:
     url: jdbc:mysql://localhost:3306/account?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
@@ -41,11 +52,3 @@ springdoc:
 
 build:
   info: 10.10.11-snapshot
-
-account:
-  name: account-service
-  version: 1.0.0
-  description: Account Service for managing user accounts
-  contact:
-    name: Kiransing Bhat
-    email: bhatkiran74@gmail.com
