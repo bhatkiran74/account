@@ -1,0 +1,44 @@
+services:
+
+  account:
+    image: "bhatkiran74/account:s1"
+    platform: linux/amd64
+    container_name: "account-ms"
+    ports:
+      - "9091:9091"
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - micobank
+
+  card:
+    image: "bhatkiran74/card:s1"
+    platform: linux/amd64
+    container_name: "card-ms"
+    ports:
+      - "9092:9092"
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - micobank
+
+  loan:
+    image: "bhatkiran74/loan:s1"
+    platform: linux/amd64
+    container_name: "loan-ms"
+    ports:
+      - "9093:9093"
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - micobank
+
+networks:
+  micobank:
+    driver: bridge
