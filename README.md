@@ -438,7 +438,7 @@ public class AccountApplication {
 ```
 
 
-## How To Spring Profiles in Spring Boot
+## How To Use Spring Profiles in Spring Boot
 ### 1: Create application-{profile}.properties or application-{profile}.yml files
 ```text
 application-e2e.yml
@@ -477,3 +477,33 @@ spring:
       on-profile: "prod"
 
 ```
+
+
+## How To Use Config Server in Spring Boot
+### 1: create Spring boot project for Config-server with dependencies
+```xml
+<!--Config Server Dependencies-->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-actuator</artifactId>
+</dependency>
+        <!--Spring Actuator-->
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-config-server</artifactId>
+</dependency>
+```
+
+### 2: Add @EnableConfigServer annotation to main spring boot application class
+```java
+@SpringBootApplication
+@EnableConfigServer
+public class ConfigServerApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(ConfigServerApplication.class, args);
+    }
+}
+```
+
+### 3: create yml file structure for config-server
+![Screenshot](readme-images/img.png)
