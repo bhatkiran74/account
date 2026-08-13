@@ -733,3 +733,36 @@ info:
     description: "Mico Bank account application"
     version: "1.0.0"
 ```
+
+
+## Microservices communication 
+###  Type 1: Feign Client
+```xml
+<dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-openfeign</artifactId>
+</dependency>
+```
+
+```java
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@EnableFeignClients
+@SpringBootApplication
+public class MainSpringBootApplication{
+    
+}
+```
+
+```java
+
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@FeignClient("card")
+public interface CardFeignClient {
+
+    @GetMapping("/api/v1/card/fetch")
+    public ResponseEntity<CardDto> fetchCardDetails(@RequestParam String mobileNumber);
+
+```
