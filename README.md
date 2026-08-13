@@ -625,3 +625,111 @@ spring:
 http://localhost:9091/actuator/busrefresh
 ```
 ![Screenshot](readme-images/img_1.png)
+
+
+## Eureka Server Setup
+### Step 1: Create Eureka Server using below dependency 
+```xml
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+</dependency>
+
+```
+![Screenshot](readme-images/img_2.png)
+
+
+### Step 2: Add configuration for yml & anonation to main class
+```text
+@EnableEurekaServer
+@SpringBootApplication
+public class EurekaServerApplication{
+    //todo
+}
+```
+```yml
+spring:
+  application:
+    name: "eurekaserver"
+  config:
+    import: "optional:configserver:http://localhost:9071"
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+
+  endpoint:
+    health:
+      show-details: always
+      probes:
+        enabled: true
+
+
+
+#Config repo configuration
+server:
+  port: 8070
+
+eureka:
+  instance:
+    hostname: localhost
+
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+
+  server:
+    enable-self-preservation: true
+```
+
+## Eureka Client setup
+###  Step 1: Add dependency
+```xml
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+</dependency>
+```
+###  Step 2: Yml Config
+```yml
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  enpoint:
+    shutdown:
+      access: unrestricted
+
+  info:
+    env:
+      enabled: true
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8070/eureka/
+
+  instance:
+    prefer-ip-address: true
+
+
+
+info:
+  app:
+    name: "Account"
+    description: "Mico Bank account application"
+    version: "1.0.0"
+```
