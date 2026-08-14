@@ -1,3 +1,11 @@
+```text
+netstat -ano | findstr :<PORT_NO>
+taskkill /PID <PID_ID> /F
+
+Ex: 
+netstat -ano | findstr :9071
+taskkill /PID 5912 /F
+```
 # <span style="color:#2E86DE">Account Microservice</span>
 
 <span style="color:#A29BFE">A Spring Boot microservice for managing account operations in the MicoBank system.</span>
@@ -766,3 +774,10 @@ public interface CardFeignClient {
     public ResponseEntity<CardDto> fetchCardDetails(@RequestParam String mobileNumber);
 
 ```
+## Implementation of Edge Server/API Gateway
+###  Step 1: 
+
+
+
+![Screenshot](readme-images/img_3.png)
+```xml
