@@ -57,4 +57,9 @@ public class HelloRestController {
         return  cardFeignClient.fetchCardDetails(mobileNumber);
     }
 
+    @GetMapping("/hello")
+    public String getHello(){
+        return "Hello Kiran";
+    }
+
 }
